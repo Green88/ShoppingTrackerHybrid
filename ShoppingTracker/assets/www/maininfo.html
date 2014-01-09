@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Page Title</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="jquery/jquery.mobile-1.3.1.min.css" />
+
+	<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
+	<script type="text/javascript" src="jquery/jquery.mobile-1.3.1.min.js"></script>
+	
+	<script src="highcharts/highcharts.js"></script>
+	<script src="highcharts/exporting.js"></script>
+
+    <script type="text/javascript">
+	var sumsStr = ob.sumStatistics();
+	
+	var sumArray = sumsStr.split('|');
+	for(elem in sumArray)
+	{
+		sumArray[elem] = parseInt(sumArray[elem], 10);
+	}
+	var prodStr = ob.prodStatistics();
+
+	var prodArray = prodStr.split('|');
+	var mySeries = [];
+	for (var i = 0; i < prodArray.length; i++) {
+        mySeries.push([prodArray[i], sumArray[i]]);
+    }
+    
+	$(function () {
+	
+        $('#container').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'My Shopping in Current Month'
+            },
+            xAxis: {
+                categories: prodArray,
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Spent (IS)',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' NIS'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -100,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF',
+                shadow: true,
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                data: sumArray
+            }]
+        });
+    });
+    </script>
+</head>
+<body>
+
+<!-- /main info page -->
+<div data-role="page" id="maininfo">
+
+	<div data-role="header" data-id="maininfoHeader">
+		<h4>Info</h4>
+	</div><!-- /header -->
+
+	<div data-role="content" >
+		<div data-role="controlgroup" data-theme="a" data-content-theme="a">
+			<a href="#statistics" data-role="button" data-theme="a">Statistics</a>
+			<a href="#help" data-role="button" data-theme="a">Help</a>
+			<a href="#about" data-role="button" data-theme="a">About</a>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-position="fixed">
+		<div data-role="controlgroup" data-type="horizontal" align="center">
+			<a data-role="button" data-icon="back" data-iconpos="left" data-inline="true" data-rel="back">Back</a>
+			<a href="menu.html" rel="external" data-role="button" data-icon="home" data-iconpos="left">Home</a>
+		</div>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<div data-role="page" id="statistics">
+<div data-role="header" data-id="statisticsHeader" data-position="fixed">
+		<h4>Statistics</h4>
+	</div><!-- /header -->
+	<div data-role="content" >
+	
+		<div id="container" style="width: 100%; height: 85%; margin: 0 auto; position:fixed; top:40px; left:3px"></div>
+		
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="controlgroup" data-type="horizontal" align="center">
+			<a data-role="button" data-icon="back" data-iconpos="left" data-inline="true" data-rel="back">Back</a>
+			<a href="menu.html" rel="external" data-role="button" data-icon="home" data-iconpos="left">Home</a>
+			<a href="#maininfo" data-role="button" data-icon="info" data-iconpos="left">Info</a>
+		</div>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<div data-role="page" id="help">
+<div data-role="header" data-id="helpHeader" data-position="fixed">
+		<h4>Help</h4>
+	</div><!-- /header -->
+	<div data-role="content">
+		<p>BUY - enter your purchases</p>
+		<p>EDIT - correct any record of current month</p>
+		<p>SETTINGS - limit current month budget and get notifications</p>
+		<p>STATISTICS - current month purchases as a barchart</p>
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="controlgroup" data-type="horizontal" align="center">
+			<a data-role="button" data-icon="back" data-iconpos="left" data-inline="true" data-rel="back">Back</a>
+			<a href="menu.html" rel="external" data-role="button" data-icon="home" data-iconpos="left">Home</a>
+			<a href="#maininfo" data-role="button" data-icon="info" data-iconpos="left">Info</a>
+		</div>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<div data-role="page" id="about">
+<div data-role="header" data-id="aboutHeader" data-position="fixed">
+	<h4>About</h4>
+	</div><!-- /header -->
+	<div data-role="content">
+		<p>This application was developed as final project for course "Smartphones Applications Development" at HIT by Tal Grinberg and Keti Blumenau.</p>
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="controlgroup" data-type="horizontal" align="center">
+			<a data-role="button" data-icon="back" data-iconpos="left" data-inline="true" data-rel="back">Back</a>
+			<a href="menu.html" rel="external" data-role="button" data-icon="home" data-iconpos="left">Home</a>
+			<a href="#maininfo" data-role="button" data-icon="info" data-iconpos="left">Info</a>
+		</div>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Page Title</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="jquery/jquery.mobile-1.3.1.min.css" />
+
+	<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
+	<script type="text/javascript" src="jquery/jquery.mobile-1.3.1.min.js"></script>
+
+</head>
+<body>
+
+<div data-role="page" id="menu">
+
+	<div data-role="header" data-id="menuHeader" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="menu.html" data-icon="grid" data-iconpos="bottom" class="ui-btn-active ui-state-persist">Buy</a></li>
+				<li><a href="edit.html" rel="external" data-icon="edit" data-iconpos="bottom">Edit</a></li>
+				<li><a href="settings.html" rel="external" data-icon="gear" data-iconpos="bottom">Settings</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<p>Enter your today purchase detail and save it in your application</p>
+		<a href="#makepurchase" data-role="button" data-icon="arrow-r" data-iconpos="right" data-inline="true" >Continue</a>
+		
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+	
+		<div data-role="controlgroup" data-type="horizontal" align="center">
+			<a data-role="button" data-icon="back" data-iconpos="left" data-inline="true" data-rel="back" data-theme="a">Back</a>
+			<a href="maininfo.html" rel="external" data-role="button" data-icon="info" data-iconpos="left" data-theme="a">Info</a>
+		</div>
+
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+<!-- /page for purchase -->
+<div data-role="page" id="makepurchase">
+
+	<div data-role="header" data-id="sumHeader">
+		<h4>Buy</h4>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+		<div data-role="fieldcontain" class="paymentbuy">
+			<select name="paymentbuy" id="paymentbuy">
+				<option value="">Payment method</option>
+				<option value="1">Cash</option>
+				<option value="2">Credit card</option>
+				<option value="3">Check</option>
+				<option value="4">Coupons</option>
+				<option value="5">Bank account</option>
+			</select>
+		</div>
+		
+		<div data-role="fieldcontain" class="productbuy">
+			<select name="productbuy" id="productbuy">
+				<option value="">Product category</option>
+				<option value="1">Food</option>
+				<option value="2">Drinks</option>
+				<option value="3">Clothing</option>
+				<option value="4">Computers</option>
+				<option value="5">Gadgets</option>
+				<option value="6">Furniture</option>
+				<option value="7">Bills</option>
+				<option value="8">For home</option>
+				<option value="9">Gifts</option>
+				<option value="10">Books</option>
+				<option value="11">For car</option>
+				<option value="12">Other</option>
+			</select>
+		</div>
+	
+		<div data-role="fieldcontain" id = "namepicker">
+			<label for="productname">Product name:</label>
+			<input type="text" data-clear-btn="true" data-mini="true" name="productname" id="productname" value="">
+		</div>
+		<div data-role="fieldcontain" id = "sumpicker">
+			<label for="sum">Sum:</label>
+			<input type="text" data-clear-btn="true" data-mini="true" name="sum" id="sum" value="">
+		</div>
+		<div data-role="fieldcontain" id = "remarkpicker">
+			<label for="remarks">Remarks:</label>
+			<textarea data-mini="true" cols="40" rows="8" name="remarks" id="remarks"></textarea>
+		</div>
+		<p>
+			<a href="#menu" data-role="button" data-mini="true" data-inline="true">Cancel</a>
+			<a href="#savedpayment" data-role="button" data-mini="true" data-inline="true" data-icon="check" data-theme="b" data-rel="dialog" onclick="pickData()">Save payment</a>
+		</p>
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="controlgroup" data-type="horizontal" align="center">
+			<a data-role="button" data-icon="back" data-iconpos="left" data-inline="true" data-rel="back" data-theme="a">Back</a>
+			<a href="maininfo.html" rel="external" data-role="button" data-icon="info" data-iconpos="left" data-theme="a">Info</a>
+		</div>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- /page for dialog "Payment saved" -->
+<div data-role="page" id="savedpayment">
+	<div data-role="content">
+		<p>Your purchase was saved!</p>
+		<p>
+			<a href="menu.html" rel="external" data-role="button" data-mini="true" data-icon="check" data-theme="b">OK</a>
+		</p>
+	</div><!-- /content -->
+</div><!-- /page -->
+
+</body>
+</html>
+<script type="text/javascript">
+	var entryOb = new Object();
+	
+	//pick method of payment
+	$('#paymentbuy').change(function(){
+    var pay = $('#paymentbuy option:selected').text();
+	entryOb.pay = pay;
+	});
+	
+	//pick product type
+	$('#productbuy').change(function(){
+	var prod = $('#productbuy option:selected').text();
+	entryOb.prod = prod;
+	});
+	
+	//functionthat picks parameters: product name, sum, remark
+	function pickData()
+	{
+		var name = $('#productname').val();
+		var sum = parseInt($('#sum').val(), 10);
+		var remark = $('#remarks').val();
+		//call java method
+		ob.createEntry(entryOb.pay, entryOb.prod, name, sum, remark);
+	}
+</script>
+
